@@ -216,3 +216,36 @@ export function InvoicesTableSkeleton() {
     </div>
   );
 }
+
+export function CustomersTableSkeleton() {
+  return (
+    <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+      {/* Table Header Skeleton */}
+      <div className="w-full bg-gray-100 p-4">
+        <div className="h-6 w-1/3 rounded bg-gray-300"></div>
+      </div>
+
+      {/* Table Body Skeleton */}
+      <div className="divide-y divide-gray-200">
+        {[...Array(5)].map((_, index) => (
+          <div key={index} className="flex items-center p-4 animate-pulse">
+            {/* Profile Image */}
+            <div className="h-10 w-10 rounded-full bg-gray-300"></div>
+
+            {/* Customer Info */}
+            <div className="ml-4 flex flex-col space-y-2">
+              <div className="h-5 w-32 rounded bg-gray-300"></div>
+              <div className="h-4 w-24 rounded bg-gray-200"></div>
+            </div>
+
+            {/* Status Placeholder */}
+            <div className="ml-auto flex items-center space-x-4">
+              <div className="h-6 w-20 rounded bg-gray-300"></div>
+              <div className="h-6 w-10 rounded bg-gray-200"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

@@ -6,14 +6,16 @@ import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-export default function Pagination({ totalPages }: { totalPages: number }) {
-  // NOTE: Uncomment this code in Chapter 11
+export default function CustomerPagination({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
+
+    if (pageNumber === '...') return '#'; // Prevent linking to '...'
+
     params.set('page', pageNumber.toString());
     return `${pathname}?${params.toString()}`;
   };
@@ -21,44 +23,40 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const allPages = generatePagination(currentPage, totalPages);
 
   return (
-    <>
-      {/*  NOTE: Uncomment this code in Chapter 11 */}
+    <div className="inline-flex">
+      <PaginationArrow
+        direction="left"
+        href={createPageURL(currentPage - 1)}
+        isDisabled={currentPage <= 1}
+      />
 
-      <div className="inline-flex">
-        <PaginationArrow
-          direction="left"
-          href={createPageURL(currentPage - 1)}
-          isDisabled={currentPage <= 1}
-        />
+      <div className="flex -space-x-px">
+        {allPages.map((page, index) => {
+          let position: 'first' | 'last' | 'single' | 'middle' | undefined;
 
-        <div className="flex -space-x-px">
-          {allPages.map((page, index) => {
-            let position: 'first' | 'last' | 'single' | 'middle' | undefined;
+          if (index === 0) position = 'first';
+          if (index === allPages.length - 1) position = 'last';
+          if (allPages.length === 1) position = 'single';
+          if (page === '...') position = 'middle';
 
-            if (index === 0) position = 'first';
-            if (index === allPages.length - 1) position = 'last';
-            if (allPages.length === 1) position = 'single';
-            if (page === '...') position = 'middle';
-
-            return (
-              <PaginationNumber
-                key={page}
-                href={createPageURL(page)}
-                page={page}
-                position={position}
-                isActive={currentPage === page}
-              />
-            );
-          })}
-        </div>
-
-        <PaginationArrow
-          direction="right"
-          href={createPageURL(currentPage + 1)}
-          isDisabled={currentPage >= totalPages}
-        />
+          return (
+            <PaginationNumber
+              key={index}
+              href={createPageURL(page)}
+              page={page}
+              position={position}
+              isActive={currentPage === page}
+            />
+          );
+        })}
       </div>
-    </>
+
+      <PaginationArrow
+        direction="right"
+        href={createPageURL(currentPage + 1)}
+        isDisabled={currentPage >= totalPages}
+      />
+    </div>
   );
 }
 
@@ -80,7 +78,7 @@ function PaginationNumber({
       'rounded-r-md': position === 'last' || position === 'single',
       'z-10 bg-blue-600 border-blue-600 text-white': isActive,
       'hover:bg-gray-100': !isActive && position !== 'middle',
-      'text-gray-300': position === 'middle',
+      'text-gray-300 cursor-default': position === 'middle',
     },
   );
 
