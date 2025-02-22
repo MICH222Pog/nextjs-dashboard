@@ -3,7 +3,7 @@ import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
-import { fetchCardData } from '@/app/lib/data'; // Remove fetchLatestInvoices
+import { fetchCardData } from '@/app/lib/data'; 
 import { Suspense } from 'react';
 import {
   RevenueChartSkeleton,
@@ -17,9 +17,7 @@ export const metadata: Metadata = {
     title: 'Dashboard',
   };
 
- 
 export default async function Page() {
-  // Remove `const latestInvoices = await fetchLatestInvoices()`
   const {
     numberOfInvoices,
     numberOfCustomers,
@@ -28,21 +26,29 @@ export default async function Page() {
   } = await fetchCardData();
  
   return (
-    <main>
-      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+    <main className="bg-gray-100 min-h-screen p-6">
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl text-gray-900`}>
         Dashboard
       </h1>
+      
+      {/* Cards Section */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      <Suspense fallback={<CardsSkeleton />}>
+        <Suspense fallback={<CardsSkeleton />}>
           <CardWrapper />
         </Suspense>
       </div>
+
+      {/* Charts & Invoices */}
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
         <Suspense fallback={<RevenueChartSkeleton />}>
-          <RevenueChart />
+          <div className="col-span-4 bg-white shadow-lg rounded-lg p-4 border border-gray-300">
+            <RevenueChart />
+          </div>
         </Suspense>
         <Suspense fallback={<LatestInvoicesSkeleton />}>
-          <LatestInvoices />
+          <div className="col-span-4 bg-white shadow-lg rounded-lg p-4 border border-gray-300">
+            <LatestInvoices />
+          </div>
         </Suspense>
       </div>
     </main>

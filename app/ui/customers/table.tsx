@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { lusitana } from '@/app/ui/fonts';
-import Search from '@/app/ui/search';
+import { DeleteInvoice } from '@/app/ui/invoices/buttons'; 
+import { DeleteCustomer } from '@/app/ui/customers/buttons'; 
 import {
   CustomersTableType,
   FormattedCustomersTable,
@@ -41,6 +41,7 @@ export default async function CustomersTable({
                           {customer.email}
                         </p>
                       </div>
+                      <DeleteInvoice id={customer.id} /> {/* Tambahkan tombol delete */}
                     </div>
                     <div className="flex w-full items-center justify-between border-b py-5">
                       <div className="flex w-1/2 flex-col">
@@ -68,13 +69,16 @@ export default async function CustomersTable({
                       Email
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
-                      Total Invoices
+                      Total Debt
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
                       Total Pending
                     </th>
                     <th scope="col" className="px-4 py-5 font-medium">
                       Total Paid
+                    </th>
+                    <th scope="col" className="px-4 py-5 font-medium text-right">
+                      Actions
                     </th>
                   </tr>
                 </thead>
@@ -103,8 +107,11 @@ export default async function CustomersTable({
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
                         {customer.total_pending}
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
                         {customer.total_paid}
+                      </td>
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm text-right">
+                        <DeleteCustomer id={customer.id} /> 
                       </td>
                     </tr>
                   ))}
