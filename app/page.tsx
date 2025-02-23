@@ -4,6 +4,12 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from "next/link";
 import Image from "next/image";
 
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+    title: 'Welcome',
+  };
+
 export default function Page() {
   return (
     <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", p: 3 }}>
