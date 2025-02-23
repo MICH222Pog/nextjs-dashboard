@@ -1,9 +1,7 @@
 import { Metadata } from 'next';
  
-
-
 import Pagination from '@/app/ui/invoices/pagination';
-import Search from '@/app/ui/search';
+import Search from '@/app/ui/search_filter';
 import Table from '@/app/ui/invoices/table';
 import { CreateInvoice } from '@/app/ui/invoices/buttons';
 import { lusitana } from '@/app/ui/fonts';
@@ -16,15 +14,17 @@ export const metadata: Metadata = {
 };
  
 export default async function Page(props: {
-    searchParams?: Promise<{
-      query?: string;
-      page?: string;
-    }>;
-  }) {
-    const searchParams = await props.searchParams;
-    const query = searchParams?.query || '';
-    const currentPage = Number(searchParams?.page) || 1;
-    const totalPages = await fetchInvoicesPages(query);
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+    status?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const status = searchParams?.status || ''; // Get the status filter
+  const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = await fetchInvoicesPages(query, status);
 
   return (
     <div className="w-full">
@@ -35,8 +35,8 @@ export default async function Page(props: {
         <Search placeholder="Search..." />
         <CreateInvoice />
       </div>
-       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
+      <Suspense key={query + status + currentPage} fallback={<InvoicesTableSkeleton />}>
+        <Table query={query} status={status} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
