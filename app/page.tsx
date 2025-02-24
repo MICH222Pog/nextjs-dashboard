@@ -12,16 +12,16 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", p: 3 }}>
+    <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", p: 3, bgcolor: "grey.200" }}>
       
       <Box
         sx={{
-          height: { xs: 72, md: 180 }, // Reduced height for better balance
+          height: { xs: 72, md: 180 }, 
           display: "flex",
-          alignItems: "center", // Center align for a more balanced look
+          alignItems: "center", 
           borderRadius: 2,
           bgcolor: "primary.main",
-          p: { xs: 2, md: 3 }, // Adjust padding for smaller height
+          p: { xs: 2, md: 3 }, 
         }}
       >
         <AcmeLogo />
@@ -52,12 +52,12 @@ export default function Page() {
               display: "flex",
               alignItems: "center",
               gap: 1.5,
-              px: 3, // More padding for better appearance
+              px: 3, 
               py: 1.5,
-              fontSize: "1rem", // Slightly larger text
-              fontWeight: 500, // Medium font weight
-              textTransform: "none", // Prevents all-uppercase text
-              borderRadius: 2, // Slightly rounded corners for a modern look
+              fontSize: "1rem", 
+              fontWeight: 500, 
+              textTransform: "none", 
+              borderRadius: 2, 
               transition: "0.3s",
               "&:hover": {
                 bgcolor: "primary.dark",
@@ -76,7 +76,7 @@ export default function Page() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            overflow: "hidden", // Prevents overflow issues
+            overflow: "hidden", 
           }}
         >
           <Image
@@ -87,8 +87,8 @@ export default function Page() {
             style={{
               width: "100%",
               height: "auto",
-              objectFit: "cover", // Ensures the image fills the container without distortion
-              borderRadius: 10, // Rounded edges for a modern look
+              objectFit: "cover", 
+              borderRadius: 10, 
             }}
           />
         </Box>

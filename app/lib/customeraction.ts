@@ -21,14 +21,14 @@ export type CustomerState = {
 };
 
 export async function createCustomer(prevState: CustomerState, formData: FormData) {
-  console.log('Received formData:', Object.fromEntries(formData.entries())); // Log form data
+  console.log('Received formData:', Object.fromEntries(formData.entries()));
 
   const validatedFields = CustomerSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
   });
 
-  console.log('Validation result:', validatedFields); // Log validation results
+  console.log('Validation result:', validatedFields); 
 
   if (!validatedFields.success) {
     return {
